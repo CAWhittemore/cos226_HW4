@@ -39,10 +39,13 @@ for i in range(5):
     print("Quote:", movies[i][1])
     print()
 
+
+#better hash this time 
+
 def simpleHash(key): 
     total = 0 
     for char in key:  
-        total += ord(char) 
+        total = total * 31 + ord(char) 
     return total % table_size 
     
 for i in range(len(movies)):
