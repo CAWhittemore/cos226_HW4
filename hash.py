@@ -58,7 +58,9 @@ for i in range(len(movies)):
 
     hashTable[index] = movies[i]
 
-quoteHashTable = [None] * table_size 
+#Qoute hash table with chaining 
+
+quoteHashTable = [[] for _ in range(table_size)]
 qouteCollisions = 0 
 
 start = time.time() 
@@ -68,20 +70,23 @@ for i in range(len(movies)):
 
     index = simpleHash(qoute) 
 
-    if quoteHashTable[index] != None: 
+    if len(quoteHashTable[index]) > 0: 
         qouteCollisions = qouteCollisions + 1 
 
-    quoteHashTable[index] = movies[i] 
+    quoteHashTable[index].append(movies[i]) 
 end = time.time() 
 
 qouteBuildTime = end - start
 
 qouteEmpty = 0 
 for i in range(len(quoteHashTable)):
-    if quoteHashTable[i] == None:
+    if len(quoteHashTable[i]) == 0:
         qouteEmpty = qouteEmpty + 1 
 
-titleHashTable = [None] * table_size 
+
+#title hash table with chaining
+
+titleHashTable = [[] for _ in range(table_size)]
 titleCollisions = 0 
 
 start = time.time() 
@@ -90,23 +95,24 @@ for i in range(len(movies)):
     title = movies[i][0] 
     index = simpleHash(title) 
 
-    if titleHashTable[index] != None: 
+    if len(titleHashTable[index]) > 0: 
         titleCollisions = titleCollisions + 1 
 
-    titleHashTable[index] = movies[i]
+    titleHashTable[index].append(movies[i])
 end = time.time() 
 
 titlebuildTime = end - start
 titleEmpty = 0 
 
 for i in range(len(titleHashTable)):
-    if titleHashTable[i] == None:
+    if len(titleHashTable[i]) == 0:
         titleEmpty = titleEmpty + 1
 
 
 print("Title Hash Table Collisions:", titleCollisions)
 print("Title Hash Table Empty Slots:", titleEmpty)
 print("Title Hash Table Build Time:", titlebuildTime, "seconds")
+
 print("Quote Hash Table Collisions:", qouteCollisions)
 print("Quote Hash Table Empty Slots:", qouteEmpty)
 print("Quote Hash Table Build Time:", qouteBuildTime, "seconds")
