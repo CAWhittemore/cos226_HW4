@@ -30,7 +30,7 @@ file.close()
 
 #setup hash tables 
 
-table_size = 1000 
+table_size = 20000 
 hashTable = [None] * table_size 
 collisions = 0
 
