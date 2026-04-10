@@ -1,5 +1,7 @@
 #Cameron Whittemore 
-# 
+# Assignment description: this program reads a csv file of movies and stores it in hash tables. 
+#I tested different hash functions/collision handling strategies to see how they affected collisions, space, and performance.
+#4/10/26 
 
 import csv 
 import time 
@@ -58,9 +60,9 @@ for i in range(len(movies)):
 
     hashTable[index] = movies[i]
 
-#Qoute hash table with chaining 
+#Qoute hash table with linear probing
 
-quoteHashTable = [[] for _ in range(table_size)]
+quoteHashTable = [None] * table_size
 qouteCollisions = 0 
 
 start = time.time() 
@@ -70,23 +72,26 @@ for i in range(len(movies)):
 
     index = simpleHash(qoute) 
 
-    if len(quoteHashTable[index]) > 0: 
+    if quoteHashTable[index] != None: 
         qouteCollisions = qouteCollisions + 1 
 
-    quoteHashTable[index].append(movies[i]) 
+    while quoteHashTable[index] != None: 
+        index = (index + 1) % table_size 
+
+    quoteHashTable[index] = movies[i] 
 end = time.time() 
 
 qouteBuildTime = end - start
 
 qouteEmpty = 0 
 for i in range(len(quoteHashTable)):
-    if len(quoteHashTable[i]) == 0:
+    if quoteHashTable[i] == None:
         qouteEmpty = qouteEmpty + 1 
 
 
-#title hash table with chaining
+#title hash table with linear probing
 
-titleHashTable = [[] for _ in range(table_size)]
+titleHashTable = [None] * table_size
 titleCollisions = 0 
 
 start = time.time() 
@@ -95,17 +100,20 @@ for i in range(len(movies)):
     title = movies[i][0] 
     index = simpleHash(title) 
 
-    if len(titleHashTable[index]) > 0: 
+    if titleHashTable[index] != None: 
         titleCollisions = titleCollisions + 1 
 
-    titleHashTable[index].append(movies[i])
+    while titleHashTable[index] != None: 
+        index = (index + 1) % table_size 
+
+    titleHashTable[index] = movies[i]
 end = time.time() 
 
 titlebuildTime = end - start
 titleEmpty = 0 
 
 for i in range(len(titleHashTable)):
-    if len(titleHashTable[i]) == 0:
+    if titleHashTable[i] == None:
         titleEmpty = titleEmpty + 1
 
 
